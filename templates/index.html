@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .content {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        width: 100%;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.5rem;
+    }
+    th, td {
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f8f8f8;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    a {
+        color: #007BFF;
+        text-decoration: none;
+        margin-right: 0.5rem;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    input[type="text"] {
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    input[type="submit"] {
+        padding: 0.75rem;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    input[type="submit"]:hover {
+        background-color: #218838;
+    }
+    .logout {
+        display: block;
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #007BFF;
+    }
+    .logout:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Template</h1>   
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created.date() }}</td>
+                <td>
+                    <a href="/delete/{{task.id}}">Delete</a>
+                    <a href="/update/{{task.id}}">Update</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <form action="/" method="POST">
+        <input type="text" name="content" id="content" placeholder="New Task">
+        <input type="submit" value="Add Task">
+    </form>
+    <a class="logout" href="{{ url_for('logout') }}">Logout</a>
+</div>
+{% endblock %}
